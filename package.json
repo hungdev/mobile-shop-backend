@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www --exec babel-node",
-    "runshop": "nodemon ./bin/www --exec babel-node"
+    "shopmobile": "nodemon ./bin/www --exec babel-node"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
