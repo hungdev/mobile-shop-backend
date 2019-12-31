@@ -1,7 +1,7 @@
 // http://www.codingpedia.org/ama/cleaner-code-in-nodejs-with-async-await-mongoose-calls-example#before
 const mongoose = require("mongoose");
 const fs = require("fs")
-const Category = require("../models/Category");
+const Category = require("../models/category");
 const Product = require("../models/product");
 const _ = require('lodash')
 
