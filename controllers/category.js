@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 const fs = require("fs")
 const Category = require("../models/Category");
-const Product = require("../models/Product");
+const Product = require("../models/product");
 const _ = require('lodash')
 
 // res.setHeader('Content-Type', 'application/json');
