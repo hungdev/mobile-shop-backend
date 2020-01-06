@@ -9,7 +9,10 @@ const _ = require('lodash')
 //https://stackoverflow.com/questions/33627238/mongoose-find-with-multiple-conditions
 exports.get_products = async (req, res, next) => {
   let criteria = {
-    is_featured: req.query.isFeatured
+    is_featured: req.query.isFeatured,
+  }
+  if (req.query.name) {
+    criteria.name = new RegExp(req.query.name, "i")
   }
   // skip: lấy từ phần tử số skip đó trở đi
   try {
