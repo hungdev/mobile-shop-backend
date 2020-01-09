@@ -14,6 +14,9 @@ exports.get_products = async (req, res, next) => {
   if (req.query.name) {
     criteria.name = new RegExp(req.query.name, "i")
   }
+  if (req.query.categoryId) {
+    criteria.category_id = req.query.categoryId
+  }
   // skip: lấy từ phần tử số skip đó trở đi
   try {
     const limit = parseInt(req.query.limit, 0) || 10;
