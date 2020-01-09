@@ -8,9 +8,12 @@ const _ = require('lodash')
 // res.setHeader('Content-Type', 'application/json');
 //https://stackoverflow.com/questions/33627238/mongoose-find-with-multiple-conditions
 exports.get_products = async (req, res, next) => {
-  let criteria = {
-    is_featured: req.query.isFeatured,
+  let criteria = {}
+
+  if (req.query.isFeatured) {
+    criteria.is_featured = req.query.isFeatured
   }
+
   if (req.query.name) {
     criteria.name = new RegExp(req.query.name, "i")
   }
