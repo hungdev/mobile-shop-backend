@@ -10,6 +10,7 @@ var router = global.router;
 /* GET users listing. */
 router.get("/get-products", ProductController.get_products);
 
+router.get("/product/:productId", ProductController.product_detail);
 // router.put("/update-post", PostController.update_post);
 
 // router.get("/get-detail-post", PostController.get_detail_post);

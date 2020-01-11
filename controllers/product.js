@@ -39,6 +39,23 @@ exports.get_products = async (req, res, next) => {
   }
 }
 
+exports.product_detail = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.productId).exec();
+    res.json({
+      result: "ok",
+      data: product,
+      message: "Query list successfully"
+    });
+  } catch (error) {
+    res.json({
+      result: "failed",
+      data: [],
+      message: `Error is : ${error}`
+    });
+  }
+}
+
 
 // exports.update_post = async (req, res, next) => {
 //   let conditions = {};//search record with "conditions" to update
