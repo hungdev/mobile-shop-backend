@@ -39,52 +39,54 @@ var readHTMLFile = function (path, callback) {
 
 exports.buy_product = async (req, res, next) => {
   const { name, phone, email, address } = req.body
-  // var transporter = nodemailer.createTransport(smtpConfig);
-  // var mailOptions = {
-  //   from: 'kindleloverdotcom@gmail.com', // sender address
-  //   to: to,
-  //   subject: `Sent file Error: ${fileName}`,
-  //   html: `Hi there, we are so sorry about sending error file: ${fileName}. Because your file has occurred or our server has occurred. Please try again. If it still gets the error.
-  //   Please contact with support via mail: hungns126@gmail.com or contact on facebook: https://www.facebook.com/groups/kindlelover/. Thank you!`,
-  // }
+  var transporter = nodemailer.createTransport(smtpConfig);
+  var mailOptions = {
+    from: 'kindleloverdotcom@gmail.com', // sender address
+    to: email,
+    subject: `Sent successfully`,
+    html: `Hi there, we got your information: email: ${email}, \n name: ${name}, \n phone: ${phone}, \n address: ${address} \n `,
+  }
 
-  // transporter.sendMail(mailOptions, function (error, info) {
-  //   if (error) {
-  //     return false;
-  //   } else {
-  //     console.log('Message sent: ' + info.response);
-  //     return true;
-  //   };
-  // });
-
-  readHTMLFile(path.join(rootPath.rootPath, 'views/emailTemplate.html'), function (err, html) {
-    var transporter = nodemailer.createTransport(smtpTransport(smtpConfig));
-    var template = handlebars.compile(html);
-    var replacements = {
-      name,
-      email,
-      phone,
-      address
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      return false;
+    } else {
+      console.log('Message sent: ' + info.response);
+      res.json({
+        result: "ok",
+        message: `Sent successfully`
+      });
     };
-    var htmlToSend = template(replacements);
-    var mailOptions = {
-      from: 'kindleloverdotcom@gmail.com',
-      to: email,
-      subject: `Successfully delivered`,
-      html: htmlToSend
-    };
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        return false;
-      } else {
-        console.log('Message sent: ' + info.response);
-        // return true;
-        res.json({
-          result: "ok",
-          message: `Sent successfully`
-        });
-      };
-    });
   });
+
+  // readHTMLFile(path.join(rootPath.rootPath, 'views/emailTemplate.html'), function (err, html) {
+  //   var transporter = nodemailer.createTransport(smtpTransport(smtpConfig));
+  //   var template = handlebars.compile(html);
+  //   var replacements = {
+  //     name,
+  //     email,
+  //     phone,
+  //     address
+  //   };
+  //   var htmlToSend = template(replacements);
+  //   var mailOptions = {
+  //     from: 'kindleloverdotcom@gmail.com',
+  //     to: email,
+  //     subject: `Successfully delivered`,
+  //     html: htmlToSend
+  //   };
+  //   transporter.sendMail(mailOptions, function (error, info) {
+  //     if (error) {
+  //       return false;
+  //     } else {
+  //       console.log('Message sent: ' + info.response);
+  //       // return true;
+  //       res.json({
+  //         result: "ok",
+  //         message: `Sent successfully`
+  //       });
+  //     };
+  //   });
+  // });
 
 };
