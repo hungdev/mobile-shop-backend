@@ -1,0 +1,289 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Mobile shop
+  description: Mobile shop API
+  contact:
+      name: Example
+      url: 'https://github.com/OAI/OpenAPI-Specification/blob/master/examples/v3.0'
+servers:
+  - url: http://domainforoffer.com
+    description: API
+components:
+  securitySchemes:
+    # bearerAuth:
+    #   type: http
+    #   scheme: bearer
+    #   bearerFormat: JWT
+
+security:
+  # - bearerAuth: []
+
+definitions:
+  Products:
+    properties:
+      totalRecords:
+        type: number
+      count:
+        type: number
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Product'
+  Status:
+    properties:
+      code:
+        type: number
+      error:
+        type: boolean
+      message:
+        type: string
+  Product:
+    type: object
+    properties:
+      _id: 
+        type: string
+      name: 
+        type: string
+      category_id: 
+        type: string
+      price: 
+        type: number
+      status: 
+        type: string
+      accessories: 
+        type: string
+      promotion: 
+        type: string
+      details: 
+        type: string
+      is_stock: 
+        type: boolean
+      is_featured: 
+        type: boolean
+      image: 
+        type: string
+        description: replace uploads/ by domain like this http://domain.com/image-name.png  ( without uploads/ )
+      created_date: 
+        type: string
+      updated_date: 
+        type: string
+
+  Comment:
+    type: object
+    properties:
+      _id: 
+        type: string
+      name: 
+        type: string
+      product_id: 
+        type: string
+      email: 
+        type: string
+      content: 
+        type: string
+      created_date: 
+        type: string
+      updated_date: 
+        type: string
+
+
+paths:
+  /get-categories:
+    get:
+      tags:
+        - Categories
+      description: get all category
+      produces:
+        - application/json
+      # parameters:
+      # - name: testRoundId
+      #   in: path
+      #   description: test round id
+      #   required: true
+      #   schema:
+      #     type: integer
+
+      responses:
+        '200':
+          description: successfully get category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  created_date:
+                    type: string
+                  updated_date:
+                    type: string
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Status'
+
+  /get-products:
+    get:
+      tags:
+        - Product
+      description: get feature product isFeatured=true and new product isFeatured=false
+      produces:
+        - application/json
+      parameters:
+        - name: isFeatured
+          in: query
+          description: get feature product isFeatured=true and new product isFeatured=false
+          required: false
+          schema:
+            type: boolean
+        - name: categoryId
+          in: query
+          description: category id
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: product name
+          required: false
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: successfully get product
+          content:
+            application/json:
+              schema:
+                # allOf:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  data:
+                    $ref: '#/definitions/Products'
+
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Status'
+                
+  /product/{productId}:
+    get:
+      tags:
+        - Product
+      description: detail product
+      produces:
+        - application/json
+      parameters:
+        - name: productId
+          in: path
+          description:
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: successfully get product
+          content:
+            application/json:
+              schema:
+                # allOf:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  data:
+                    $ref: '#/definitions/Product'
+
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Status'
+
+  /get-product-comments/{productId}:
+    get:
+      tags:
+        - Comment
+      description: get product comment
+      produces:
+        - application/json
+      parameters:
+        - name: productId
+          in: path
+          description:
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: successfully get comment
+          content:
+            application/json:
+              schema:
+                # allOf:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  data:
+                    $ref: '#/definitions/Comment'
+
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Status'
+
+  /create-comment:
+    post:
+      tags:
+        - Comment
+      description: create comment
+      produces:
+        - application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                productId:
+                  type: string
+                email:
+                  type: string
+                content:
+                  type: string
+
+      responses:
+        '200':
+          description: successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                  message:
+                    type: string
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Status'
