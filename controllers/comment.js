@@ -18,7 +18,7 @@ exports.get_product_comments = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit, 0) || 10;
     const skip = parseInt(req.query.skip, 0) || 0;
-    const commentRs = await Comment.find({ product_id: req.params.productId }).skip(skip).limit(limit).sort({ created_date: 1 }) // sort theo title
+    const commentRs = await Comment.find({ product_id: req.params.productId }).skip(skip).limit(limit).sort({ created_date: -1 }) // sort theo title
     // .select("title content location created_date user_id image_url likes")
     res.status(200).json({
       result: "ok",
