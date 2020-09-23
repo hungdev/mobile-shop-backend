@@ -24,6 +24,7 @@ exports.get_product_comments = async (req, res, next) => {
       result: "ok",
       data: commentRs,
       count: commentRs.length,
+      total: await Comment.count({}),
       message: "Query list of comment successfully"
     })
   } catch (err) {
