@@ -76,7 +76,7 @@ const corsOptions = {
   },
   credentials: true,
 };
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
